@@ -36,14 +36,10 @@ import java.util.Scanner;
  * by the end of the day (midnight).
  * 
  * @author dputnam3 "David Putnam"
- * @version 1.0
- * @since 2017-01-30
+ * @version 2.0
  *
  */
 public class AuctionCostEstimator {
-
-    private static final double COMMISSION_PCT = 0.10;
-    private static final double SALES_TAX_PCT = 0.05;
 
     /**
      * The main program does not utilize any arguments.
@@ -53,21 +49,18 @@ public class AuctionCostEstimator {
      *            calculate commission and sales tax based on that bid
      */
     public static void main(String[] args) {
-        final AuctionCostEstimator auctionCostEstimater = new AuctionCostEstimator();
-        final Scanner scanner = new Scanner(System.in);
 
         try {
             // enter the bid
-            final double bid = promptForAndReadBid(scanner);
-            // calculate all costs
-            final double[] costs = auctionCostEstimater.calculateCosts(bid);
-            // print the total cost report
-            printTotalCostReport(bid, costs);
-        } catch (InputMismatchException e) {
-            System.out.println("You must enter a valid number. ");
+            final double bid = promptForAndReadBid();
+            // create the cost calculator
+            final CostCalculator costCalculator = new CostCalculator(bid);
+            // print the cost report
+            printTotalCostReport(bid, costCalculator.getCommission(), costCalculator.getSalesTax());
+        } catch (NumberFormatException e) {
+            System.out.println("You must enter a valid number.");
         }
 
-        scanner.close();
         System.exit(0);
     }
 
@@ -75,43 +68,36 @@ public class AuctionCostEstimator {
      * Print a report with all the information calculated.
      * 
      * @param bid
-     *            The amount bid without any extras
-     * @param costs
-     *            The extra costs associated with the bid
+     * @param commission
+     * @param salesTax
+     * @param total
      */
-    private static void printTotalCostReport(double bid, double[] costs) {
+    private static void printTotalCostReport(double bid, double commission, double salesTax) {
         final NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
+
         System.out.println("Your bid was " + currencyFormatter.format(bid));
-        System.out.println("The commission was " + currencyFormatter.format(costs[0]));
-        System.out.println("The sales tax was " + currencyFormatter.format(costs[1]));
-        System.out.println("Your total is " + currencyFormatter.format(bid + costs[0] + costs[1]));
+        System.out.println("The commission was " + currencyFormatter.format(commission));
+        System.out.println("The sales tax was " + currencyFormatter.format(salesTax));
+        System.out.println("Your total is " + currencyFormatter.format(bid + commission + salesTax));
     }
 
     /**
      * Print the prompt on the line and read the entered bid as a floating point
-     * number
+     * number to be returned
      * 
-     * @param scanner
-     *            The scanner to use to get input from
      * @return the entered bid
      */
-    private static double promptForAndReadBid(Scanner scanner) {
+    private static double promptForAndReadBid() {
+        final Scanner scanner = new Scanner(System.in);
+        double bid = 0.0;
         System.out.print("How much did you bid: ");
-        double bid = scanner.nextDouble();
+        try {
+            bid = scanner.nextDouble();
+        } catch (InputMismatchException e) {
+            throw new NumberFormatException(e.toString());
+        } finally {
+            scanner.close();
+        }
         return bid;
-    }
-
-    /**
-     * For the given bid calculate the commission and sales tax.
-     * 
-     * @param bid
-     *            The amount bid without any extras
-     * @return The extra costs associated with that bid
-     */
-    public double[] calculateCosts(double bid) {
-        double[] costs = new double[2];
-        costs[0] = bid * COMMISSION_PCT;
-        costs[1] = (bid + costs[0]) * SALES_TAX_PCT;
-        return costs;
     }
 }
