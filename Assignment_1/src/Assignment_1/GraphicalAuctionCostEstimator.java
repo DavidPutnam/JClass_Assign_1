@@ -1,9 +1,9 @@
 package Assignment_1;
 
 import java.text.NumberFormat;
-import java.util.InputMismatchException;
 import java.util.Locale;
-import java.util.Scanner;
+
+import javax.swing.JOptionPane;
 
 /**
  * <h1>Assignment 1 - Auction Cost Estimator</h1>
@@ -39,7 +39,7 @@ import java.util.Scanner;
  * @version 2.0
  *
  */
-public class AuctionCostEstimator {
+public class GraphicalAuctionCostEstimator {
 
     /**
      * The main program does not utilize any arguments.
@@ -71,16 +71,8 @@ public class AuctionCostEstimator {
      * @return the entered bid
      */
     private static double promptForAndReadBid() {
-        final Scanner scanner = new Scanner(System.in);
-        double bid = 0.0;
-        System.out.print("How much did you bid: ");
-        try {
-            bid = scanner.nextDouble();
-        } catch (InputMismatchException e) {
-            throw new NumberFormatException(e.toString());
-        } finally {
-            scanner.close();
-        }
+        final String bidString = JOptionPane.showInputDialog(null, "How much did you bid:");
+        double bid = Double.parseDouble(bidString);
         return bid;
     }
 
@@ -95,9 +87,11 @@ public class AuctionCostEstimator {
     private static void printTotalCostReport(double bid, double commission, double salesTax) {
         final NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
 
-        System.out.println("Your bid was " + currencyFormatter.format(bid));
-        System.out.println("The commission was " + currencyFormatter.format(commission));
-        System.out.println("The sales tax was " + currencyFormatter.format(salesTax));
-        System.out.println("Your total is " + currencyFormatter.format(bid + commission + salesTax));
+        String report = "Your bid was " + currencyFormatter.format(bid) + "\n" + "The commission was "
+                + currencyFormatter.format(commission) + "\n" + "The sales tax was "
+                + currencyFormatter.format(salesTax) + "\n" + "Your total is "
+                + currencyFormatter.format(bid + commission + salesTax) + "\n";
+
+        JOptionPane.showMessageDialog(null, report);
     }
 }

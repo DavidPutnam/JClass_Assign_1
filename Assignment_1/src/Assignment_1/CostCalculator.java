@@ -1,7 +1,7 @@
 package Assignment_1;
 
 /**
- * CostCalculation provides the mathematics behind the estimation process
+ * CostCalculator provides the mathematics behind the estimation process
  * 
  * @author dputnam3 "David Putnam"
  * @version 1.0
