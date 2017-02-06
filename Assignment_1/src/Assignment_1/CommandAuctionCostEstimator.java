@@ -39,7 +39,7 @@ import java.util.Scanner;
  * @version 2.0
  *
  */
-public class AuctionCostEstimator {
+public class CommandAuctionCostEstimator {
 
     /**
      * The main program does not utilize any arguments.

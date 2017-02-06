@@ -8,7 +8,7 @@ import org.junit.Test;
  * These are the test cases for the CostCalculation
  * 
  * @author dputnam3
- * @see AuctionCostEstimator
+ * @see CommandAuctionCostEstimator
  */
 public class CostCalculatorTest {
 
