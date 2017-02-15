@@ -1,8 +1,11 @@
-package Assignment_1;
+package assignment_1;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+
+import assignment_1.CommandAuctionCostEstimator;
+import assignment_1.CostCalculator;
 
 /**
  * These are the test cases for the CostCalculation

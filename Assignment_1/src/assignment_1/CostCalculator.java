@@ -1,4 +1,4 @@
-package Assignment_1;
+package assignment_1;
 
 /**
  * CostCalculator provides the mathematics behind the estimation process
