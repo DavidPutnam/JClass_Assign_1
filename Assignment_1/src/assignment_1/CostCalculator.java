@@ -27,6 +27,7 @@ public class CostCalculator {
      *            The amount bid
      */
     public CostCalculator(double bid) {
+    	super();
         this.commission = bid * COMMISSION_PCT;
         this.salesTax = (bid + this.commission) * SALES_TAX_PCT;
     }
